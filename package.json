@@ -10,10 +10,11 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"deploy": "npm run build && gh-pages -d build"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.1.0",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.3.2",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@types/eslint": "8.56.2",
@@ -21,6 +22,7 @@
 		"@typescript-eslint/parser": "^6.18.1",
 		"eslint": "^8.56.0",
 		"eslint-plugin-svelte": "^2.35.1",
+		"gh-pages": "^6.1.1",
 		"svelte": "^4.2.8",
 		"svelte-check": "^3.6.3",
 		"tslib": "^2.6.2",
