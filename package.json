@@ -13,6 +13,9 @@
 		"lint": "eslint .",
 		"deploy": "npm run build && gh-pages -d build"
 	},
+	"dependencies": {
+		"@sveltestrap/sveltestrap": "^6.2.2"
+	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.3.2",
