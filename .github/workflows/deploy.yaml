@@ -30,7 +30,7 @@ jobs:
       id-token: 'write'
     steps:
       - name: 'Upload Pages Artifacts'
-        uses: 'actions/upload-pages-artifact@v3'
+        uses: 'actions/upload-pages-artifact@v2'
       - name: 'Deploy to GitHub Pages'
         id: 'deployment'
         uses: 'actions/deploy-pages@v4'
