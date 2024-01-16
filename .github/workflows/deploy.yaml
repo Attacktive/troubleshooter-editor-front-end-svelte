@@ -29,8 +29,13 @@ jobs:
       pages: 'write'
       id-token: 'write'
     steps:
+      - name: 'Fix File Permissions'
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: 'Upload Pages Artifacts'
-        uses: 'actions/upload-pages-artifact@v2'
+        uses: 'actions/upload-pages-artifact@v3'
       - name: 'Deploy to GitHub Pages'
         id: 'deployment'
         uses: 'actions/deploy-pages@v4'
