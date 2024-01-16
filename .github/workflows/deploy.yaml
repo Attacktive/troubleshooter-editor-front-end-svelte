@@ -26,9 +26,12 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: 'ubuntu-latest'
     permissions:
+      contents: 'read'
       pages: 'write'
       id-token: 'write'
     steps:
+      - name: 'Setup Pages'
+        uses: 'actions/configure-pages@v4'
       - name: 'Fix File Permissions'
         run: |
           chmod -c -R +rX "_site/" | while read line; do
@@ -36,6 +39,8 @@ jobs:
           done
       - name: 'Upload Pages Artifacts'
         uses: 'actions/upload-pages-artifact@v3'
+        with:
+          path: '.'
       - name: 'Deploy to GitHub Pages'
         id: 'deployment'
         uses: 'actions/deploy-pages@v4'
