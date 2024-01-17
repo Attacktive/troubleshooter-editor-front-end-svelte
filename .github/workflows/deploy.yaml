@@ -6,8 +6,8 @@ on:
 jobs:
   build:
     name: 'Build and Deploy'
-    if: github.ref == 'refs/heads/main'
     runs-on: 'ubuntu-latest'
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v4'
@@ -21,18 +21,5 @@ jobs:
         run: 'npm run build'
       - name: 'Run tests'
         run: 'npm run test'
-  deploy:
-    needs: 'build'
-    runs-on: 'ubuntu-latest'
-    steps:
       - name: 'Deploy to GitHub Pages'
-        run: |
-          git config --global user.name $user_name
-          git config --global user.email $user_email
-          git remote set-url origin https://${github_token}@github.com/${repository}
-          npm run deploy
-        env:
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          github_token: "${{ secrets.ACCESS_TOKEN }}"
-          repository: "${{ github.repository }}"
+        uses: 'actions/deploy-pages@v4'
