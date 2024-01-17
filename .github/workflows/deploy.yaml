@@ -1,12 +1,10 @@
 name: 'Deploy to gh-pages'
 on:
   push:
-    branches:
-      - 'main'
+    branches: ['main', 'deploy']
 jobs:
   build:
     name: 'Build and Deploy'
-    if: github.ref == 'refs/heads/main'
     runs-on: 'ubuntu-latest'
     steps:
       - name: 'Checkout code'
