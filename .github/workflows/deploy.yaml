@@ -4,7 +4,7 @@ on:
     branches: ['main', 'deploy']
 jobs:
   build:
-    name: 'Build and Deploy'
+    name: 'Build'
     runs-on: 'ubuntu-latest'
     steps:
       - name: 'Checkout code'
@@ -16,17 +16,27 @@ jobs:
       - name: 'Install NPM packages'
         run: 'npm ci'
       - name: 'Build project'
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
         run: 'npm run build'
       - name: 'Run tests'
         run: 'npm run test'
-      - name: 'Deploy to GitHub Pages'
-        run: |
-          git config --global user.name $user_name
-          git config --global user.email $user_email
-          git remote set-url origin https://${github_token}@github.com/${repository}
-          npm run deploy
-        env:
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          github_token: "${{ secrets.ACCESS_TOKEN }}"
-          repository: "${{ github.repository }}"
+      - name: 'Upload artifacts'
+        uses: 'actions/upload-pages-artifact@v3'
+        with:
+          # this should match the `pages` option in your adapter-static options
+          path: 'build/'
+  deploy:
+    name: 'Deploy'
+    needs: 'build'
+    runs-on: 'ubuntu-latest'
+    permissions:
+      pages: 'write'
+      id-token: 'write'
+    environment:
+      name: 'github-pages'
+      url: "${{ steps.deployment.outputs.page_url }}"
+    steps:
+      - name: 'Deploy'
+        id: 'deployment'
+        uses: 'actions/deploy-pages@v4'
