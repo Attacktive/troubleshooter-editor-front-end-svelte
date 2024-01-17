@@ -24,25 +24,15 @@ jobs:
   deploy:
     needs: 'build'
     runs-on: 'ubuntu-latest'
-    permissions:
-      contents: 'read'
-      pages: 'write'
-      id-token: 'write'
-    environment:
-      name: 'github-pages'
-      url: "${{ steps.deployment.outputs.page_url }}"
     steps:
-      - name: 'Setup Pages'
-        uses: 'actions/configure-pages@v4'
-      - name: 'Fix File Permissions'
-        run: |
-          chmod -c -R +rX "_site/" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
-      - name: 'Upload Pages Artifacts'
-        uses: 'actions/upload-pages-artifact@v3'
-        with:
-          path: '.'
       - name: 'Deploy to GitHub Pages'
-        id: 'deployment'
-        uses: 'actions/deploy-pages@v4'
+        run: |
+          git config --global user.name $user_name
+          git config --global user.email $user_email
+          git remote set-url origin https://${github_token}@github.com/${repository}
+          npm run deploy
+        env:
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          github_token: "${{ secrets.ACCESS_TOKEN }}"
+          repository: "${{ github.repository }}"
