@@ -60,7 +60,6 @@
 	};
 
 	const download = async (subUrl: string) => {
-		console.log(store.stringify());
 		toShowSpinner = true;
 
 		try {
@@ -92,8 +91,11 @@
 		formData.append("file", file);
 
 		if (toSubmitEdits) {
+			const stringified = store.stringify()
+			console.debug("to be uploaded", stringified);
+
 			const blob = new Blob(
-				[store.stringify()],
+				[stringified],
 				{ type: "application/json" }
 			);
 
@@ -144,7 +146,7 @@
 	</Tabs>
 </div>
 <div class="mt-4">
-	<Textarea value={debuggingOutput} rows="6" readonly/>
+	<Textarea value={debuggingOutput} rows="8" readonly/>
 </div>
 
 <style>
