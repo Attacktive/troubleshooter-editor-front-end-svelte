@@ -80,8 +80,7 @@
 			if (error instanceof Error) {
 				debuggingOutput = error.toString();
 			} else {
-				const nonErrorError = error as any;
-				debuggingOutput = `caught ${nonErrorError.constructor.name}: ${nonErrorError.toString()}`;
+				debuggingOutput = `A non-Error "something" is thrown: ${error}`;
 			}
 		} finally {
 			toShowSpinner = false;
