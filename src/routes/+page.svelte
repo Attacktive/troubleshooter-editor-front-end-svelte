@@ -7,6 +7,7 @@
 	import Company from "../components/tabs/Company.svelte";
 	import Items from "../components/tabs/Items.svelte";
 	import nyancat from "$lib/assets/nyancat.gif";
+	import Rosters from "../components/tabs/Rosters.svelte";
 
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
@@ -144,7 +145,9 @@
 		<TabItem title="Items">
 			<Items/>
 		</TabItem>
-		<TabItem title="Rosters"></TabItem>
+		<TabItem title="Rosters">
+			<Rosters/>
+		</TabItem>
 		<TabItem title="Quests"></TabItem>
 	</Tabs>
 </div>

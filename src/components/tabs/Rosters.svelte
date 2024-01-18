@@ -1,47 +1,35 @@
-<!--
-import React from "react";
-import { Accordion, AccordionHeader, AccordionItem, Col, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
-import AccordionBody from "react-bootstrap/AccordionBody";
-import { RosterCollection } from "../../types";
+<script lang="ts">
+	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
+	import { store } from "../../store/store";
+</script>
 
-export default function Roster({ rosters, readonly = false }: { rosters: RosterCollection, readonly: boolean }) {
-	return (
-		<Row>
-			<Col>
-				<Accordion>
-					{
-						rosters.map(roster => {
-							return (
-								<AccordionItem key={roster.id} eventKey={roster.id.toString()}>
-									<AccordionHeader>#{roster.id} {roster.name}</AccordionHeader>
-									<AccordionBody>
-										<FormGroup>
-											<FormLabel>Name</FormLabel>
-											<FormControl type="text" defaultValue={roster.name} disabled={readonly}/>
-										</FormGroup>
-										<FormGroup>
-											<FormLabel>Class</FormLabel>
-											{/* TODO: change it to a select maybe */}
-											<FormControl type="text" defaultValue={roster.class} disabled={readonly}/>
-										</FormGroup>
-										<FormGroup>
-											<FormLabel>Level</FormLabel>
-											<FormControl type="number" defaultValue={roster.level} min={0} step={1} disabled={readonly}/>
-										</FormGroup>
-										<FormGroup>
-											<FormLabel>Exp</FormLabel>
-											<FormControl type="number" defaultValue={roster.exp} min={0} step={1} disabled={readonly}/>
-										</FormGroup>
-										{/* TODO: handle properties */}
-										{JSON.stringify(roster.properties)}
-									</AccordionBody>
-								</AccordionItem>
-							);
-						})
-					}
-				</Accordion>
-			</Col>
-		</Row>
-	);
-}
--->
+<Accordion>
+	{#each $store.rosters as roster (`roster-${roster.id}`)}
+		<AccordionItem>
+			<span slot="header">#{roster.id} {roster.name}</span>
+			<div class="my-1">
+				<Label for={`name-${roster.id}`}>Name</Label>
+				<Input id={`name-${roster.id}`} bind:value={roster.name}/>
+			</div>
+			<div class="my-1">
+				<Label for={`class-${roster.id}`}>Class</Label>
+				<Input id={`class-${roster.id}`} bind:value={roster.class}/>
+			</div>
+			<div class="my-1">
+				<Label for={`level-${roster.id}`}>Level</Label>
+				<NumberInput id={`level-${roster.id}`} bind:value={roster.level}/>
+			</div>
+			<div class="my-1">
+				<Label for={`exp-${roster.id}`}>Exp</Label>
+				<NumberInput id={`exp-${roster.id}`} bind:value={roster.exp}/>
+			</div>
+
+			<Accordion class="my-2">
+				<AccordionItem>
+					<span slot="header">#{roster.id} raw data</span>
+					<Textarea value={JSON.stringify(roster.properties, null, 2)} rows="6" readonly/>
+				</AccordionItem>
+			</Accordion>
+		</AccordionItem>
+	{/each}
+</Accordion>
