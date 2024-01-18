@@ -11,14 +11,16 @@ export interface CompanyInfo {
 	properties: CompanyProperties
 }
 
-export const defaultCompany: CompanyInfo = Object.freeze({
-	id: 0,
-	name: "",
-	vill: 0,
-	properties: {
-		GameDifficulty: ""
-	}
-});
+export const createInitialValue = (): CompanyInfo => {
+	return {
+		id: 0,
+		name: "",
+		vill: 0,
+		properties: {
+			GameDifficulty: ""
+		}
+	};
+};
 
 export function truncateCompanyInfo(company: CompanyInfo): CompanyInfo {
 	return {

@@ -1,14 +1,11 @@
 <script lang="ts">
 	import type { SaveData } from "../types/save-data";
 	import type { AxiosRequestConfig } from "axios";
-	import type { CompanyInfo } from "../types/company";
-	import type { ItemCollection } from "../types/item";
-	import type { RosterCollection } from "../types/roster";
-	import type { QuestCollection } from "../types/quest";
-	import nyancat from "$lib/assets/nyancat.gif";
-	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
 	import axios from "axios";
-	import { defaultCompany } from "../types/company.js";
+	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
+	import { store } from "../store/store";
+	import Company from "../components/tabs/Company.svelte";
+	import nyancat from "$lib/assets/nyancat.gif";
 
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
@@ -18,10 +15,6 @@
 	let fileIsUploaded = false;
 	let debuggingOutput = "";
 	let files: FileList | undefined;
-	let company: CompanyInfo;
-	let items: ItemCollection;
-	let rosters: RosterCollection;
-	let quests: QuestCollection;
 
 	$: file = files?.[0];
 	$: fileIsSelected = file !== undefined;
@@ -45,10 +38,7 @@
 
 				debuggingOutput = JSON.stringify(saveData);
 
-				company = saveData.company;
-				items = saveData.items;
-				rosters = saveData.rosters;
-				quests = saveData.quests;
+				store.set(saveData);
 
 				fileIsUploaded = true;
 			})
@@ -70,6 +60,7 @@
 	};
 
 	const download = async (subUrl: string) => {
+		console.log(store.stringify());
 		toShowSpinner = true;
 
 		try {
@@ -101,9 +92,8 @@
 		formData.append("file", file);
 
 		if (toSubmitEdits) {
-			const stringified = JSON.stringify({ company, rosters, items, quests });
 			const blob = new Blob(
-				[stringified],
+				[store.stringify()],
 				{ type: "application/json" }
 			);
 
@@ -125,11 +115,7 @@
 
 	const resetComponents = () => {
 		files = undefined;
-
-		company = defaultCompany;
-		items = [];
-		rosters = [];
-		quests = [];
+		store.reset();
 	};
 </script>
 
@@ -150,7 +136,7 @@
 <div class="mt-4">
 	<Tabs>
 		<TabItem title="Company" open>
-
+			<Company/>
 		</TabItem>
 		<TabItem title="Items"></TabItem>
 		<TabItem title="Rosters"></TabItem>
