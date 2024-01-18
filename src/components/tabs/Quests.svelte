@@ -1,39 +1,27 @@
-<!--
-import React from "react";
-import { Accordion, AccordionHeader, AccordionItem, Col, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
-import AccordionBody from "react-bootstrap/AccordionBody";
-import { QuestCollection } from "types";
+<script lang="ts">
+	import { Accordion, AccordionItem, Input, Label, NumberInput, Textarea } from "flowbite-svelte";
+	import { store } from "../../store/store";
+</script>
 
-export default function Quest({ quests, readonly = false }: { quests: QuestCollection, readonly: boolean }) {
-	return (
-		<Row>
-			<Col>
-				<Accordion>
-					{
-						quests.map(quest => {
-							return (
-								<AccordionItem key={quest.index} eventKey={quest.index.toString()}>
-									<AccordionHeader>#{quest.index} {quest.name}</AccordionHeader>
-									<AccordionBody>
-										<input type="hidden"/>
-										<FormGroup>
-											<FormLabel>Name</FormLabel>
-											<FormControl type="text" defaultValue={quest.name} disabled={readonly}/>
-										</FormGroup>
-										<FormGroup>
-											<FormLabel>Stage</FormLabel>
-											<FormControl type="number" defaultValue={quest.stage} min={0} step={1} disabled={readonly}/>
-										</FormGroup>
-										{/* TODO: handle properties */}
-										{JSON.stringify(quest.properties)}
-									</AccordionBody>
-								</AccordionItem>
-							);
-						})
-					}
-				</Accordion>
-			</Col>
-		</Row>
-	);
-}
--->
+<Accordion>
+	{#each $store.quests as quest (`quest-${quest.index}`)}
+		<AccordionItem>
+			<span slot="header">#{quest.index} {quest.name}</span>
+			<div class="my-1">
+				<Label for={`name-${quest.index}`}>Name</Label>
+				<Input id={`name-${quest.index}`} bind:value={quest.name}/>
+			</div>
+			<div class="my-1">
+				<Label for={`class-${quest.index}`}>Class</Label>
+				<NumberInput id={`class-${quest.index}`} bind:value={quest.stage}/>
+			</div>
+
+			<Accordion class="my-2">
+				<AccordionItem>
+					<span slot="header">#{quest.index} raw data</span>
+					<Textarea value={JSON.stringify(quest.properties, null, 2)} rows="5" readonly/>
+				</AccordionItem>
+			</Accordion>
+		</AccordionItem>
+	{/each}
+</Accordion>
