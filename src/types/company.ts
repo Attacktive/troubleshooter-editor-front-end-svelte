@@ -1,7 +1,7 @@
 import type { Properties } from "./property";
 
 export interface CompanyProperties extends Properties {
-	GameDifficulty: string
+	GameDifficulty: string;
 }
 
 export interface CompanyInfo {
@@ -21,14 +21,3 @@ export const createInitialValue = (): CompanyInfo => {
 		}
 	};
 };
-
-export function truncateCompanyInfo(company: CompanyInfo): CompanyInfo {
-	return {
-		id: company.id,
-		name: company.name,
-		vill: company.vill,
-		properties: {
-			GameDifficulty: company.properties.GameDifficulty
-		}
-	};
-}
