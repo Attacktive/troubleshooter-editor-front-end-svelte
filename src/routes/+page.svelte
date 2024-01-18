@@ -23,6 +23,7 @@
 
 	$: file = files?.[0];
 	$: fileIsSelected = file !== undefined;
+	$: uploadResetButtonLabel = fileIsUploaded? "Reset" : "Upload";
 
 	const uploadOrReset = () => {
 		if (fileIsUploaded) {
@@ -141,7 +142,7 @@
 
 <div class="grid grid-cols-12 mt-2">
 	<Fileupload bind:files={files} accept={".sav,.bak"} class="col-span-3" on:change/>
-	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} on:click={upload}>Upload</Button>
+	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} on:click={uploadOrReset}>{uploadResetButtonLabel}</Button>
 	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={save}>Save</Button>
 	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={quickCheats}>Quick Cheats!</Button>
 </div>
