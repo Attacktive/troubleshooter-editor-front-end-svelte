@@ -13,10 +13,11 @@
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
 
+	let fileUploadKey = {};
 	let toShowSpinner = false;
 	let fileIsUploaded = false;
 	let debuggingOutput = "";
-	let files: FileList;
+	let files: FileList | undefined;
 	let company: CompanyInfo;
 	let items: ItemCollection;
 	let rosters: RosterCollection;
@@ -28,6 +29,7 @@
 
 	const uploadOrReset = () => {
 		if (fileIsUploaded) {
+			fileUploadKey = {};
 			resetFile();
 		} else {
 			upload();
@@ -38,29 +40,27 @@
 		toShowSpinner = true;
 
 		axios.post<SaveData>(`${apiRoot}/upload`, generateFormData())
-		.then(({ data: saveData }) => {
-			console.debug("response of /upload", saveData);
+			.then(({ data: saveData }) => {
+				console.debug("response of /upload", saveData);
 
-			debuggingOutput = JSON.stringify(saveData);
+				debuggingOutput = JSON.stringify(saveData);
 
-			//const { company, rosters, items, quests } = truncateSaveData(saveData);
+				company = saveData.company;
+				items = saveData.items;
+				rosters = saveData.rosters;
+				quests = saveData.quests;
 
-			company = saveData.company;
-			items = saveData.items;
-			rosters = saveData.rosters;
-			quests = saveData.quests;
+				fileIsUploaded = true;
+			})
+			.catch(error => {
+				console.error(error);
+				debuggingOutput = error;
 
-			fileIsUploaded = true;
-		})
-		.catch(error => {
-			console.error(error);
-			debuggingOutput = error;
+				resetComponents();
 
-			resetComponents();
-
-			fileIsUploaded = false;
-		})
-		.finally(() => toShowSpinner = false);
+				fileIsUploaded = false;
+			})
+			.finally(() => toShowSpinner = false);
 	}
 
 	const resetFile = () => {
@@ -124,10 +124,7 @@
 	};
 
 	const resetComponents = () => {
-		// I think DOM manipulation like this isn't ideal, but it seems like React Bootstrap can't really clear the current file selection.
-		const fileInput = document.querySelector("#file-input") as HTMLInputElement;
-		fileInput.value = "";
-		fileInput.files = null;
+		files = undefined;
 
 		company = defaultCompany;
 		items = [];
@@ -143,7 +140,9 @@
 {/if}
 
 <div class="grid grid-cols-12 mt-2">
-	<Fileupload bind:files={files} accept={".sav,.bak"} class="col-span-3" on:change/>
+	{#key fileUploadKey}
+		<Fileupload bind:files={files} accept={".sav,.bak"} class="col-span-3"/>
+	{/key}
 	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} on:click={uploadOrReset}>{uploadResetButtonLabel}</Button>
 	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={save}>Save</Button>
 	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={quickCheats}>Quick Cheats!</Button>
