@@ -5,7 +5,8 @@
 	import type { ItemCollection } from "../types/item";
 	import type { RosterCollection } from "../types/roster";
 	import type { QuestCollection } from "../types/quest";
-	import { Button, Fileupload, Spinner, TabItem, Tabs, Textarea } from "flowbite-svelte";
+	import nyancat from "$lib/assets/nyancat.gif";
+	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
 	import axios from "axios";
 	import { defaultCompany } from "../types/company.js";
 
@@ -136,7 +137,9 @@
 </script>
 
 {#if toShowSpinner}
-	<Spinner color="red" size="20"/>
+	<div class="overlay">
+		<Img src={nyancat} class="h-full"/>
+	</div>
 {/if}
 
 <div class="grid grid-cols-12 mt-2">
@@ -158,3 +161,12 @@
 <div class="mt-4">
 	<Textarea value={debuggingOutput} rows="6" readonly/>
 </div>
+
+<style>
+	.overlay {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background-color: rgb(0 0 0 / 22.22%);
+	}
+</style>
