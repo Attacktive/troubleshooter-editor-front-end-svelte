@@ -56,7 +56,7 @@
 					<Input id={`option-key-${item.id}`} list="option-key" bind:value={item.properties["Option/OptionKey"]}/>
 				</div>
 
-				{#each [1, 2, 3, 4, 5] as ordinal (`property-${item.id}-${ordinal}`)}
+				{#each [1, 2, 3, 4, 5] as ordinal (`item-${item.id}-property-${ordinal}`)}
 					<div class="my-1">
 						<Label for={`property-${item.id}-${ordinal}`}>Property {ordinal}</Label>
 						<Input id={`property-${item.id}-${ordinal}`} list="options-datalist" bind:value={item.properties[`Option/Type${ordinal}`]}/>
