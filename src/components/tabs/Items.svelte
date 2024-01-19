@@ -21,7 +21,7 @@
 	<Accordion>
 		{#each $store.items as item (`item-${item.id}`)}
 			<AccordionItem>
-				<span slot="header">{item.id} {item.type}</span>
+				<span slot="header">#{item.id} {item.type}</span>
 				<div class="my-1">
 					<Label for={`type-${item.id}`}>Type</Label>
 					<Input id={`type-${item.id}`} bind:value={item.type}/>
@@ -43,13 +43,13 @@
 				<div class="my-1">
 					<Label for={`bound-${item.id}`}>Bound to the character?</Label>
 					<Select id={`bound-${item.id}`} bind:value={item.properties["Binded"]}>
-						<option value="True">true</option>
-						<option value="False">false</option>
+						<option value="true">true</option>
+						<option value="false">false</option>
 					</Select>
 				</div>
 				<div class="my-1">
 					<Label for={`option-ratio-${item.id}`}>Option Ratio</Label>
-					<Input id={`option-ratio-${item.id}`} bind:value={item.properties["OptionRatio"]}/>
+					<Input id={`option-ratio-${item.id}`} bind:value={item.properties["Option/Ratio"]}/>
 				</div>
 				<div class="my-1">
 					<Label for={`option-key-${item.id}`}>Option Key</Label>
@@ -59,14 +59,14 @@
 				{#each [1, 2, 3, 4, 5] as ordinal (`property-${item.id}-${ordinal}`)}
 					<div class="my-1">
 						<Label for={`property-${item.id}-${ordinal}`}>Property {ordinal}</Label>
-						<Input id={`property-${item.id}-${ordinal}`} list="options-datalist" bind:value={item.properties[`Option/Option${ordinal}`]}/>
+						<Input id={`property-${item.id}-${ordinal}`} list="options-datalist" bind:value={item.properties[`Option/Type${ordinal}`]}/>
 						<Input bind:value={item.properties[`Option/Value${ordinal}`]}/>
 					</div>
 				{/each}
 
 				<Accordion class="my-2">
 					<AccordionItem>
-						<span slot="header">#{item.id} raw data</span>
+						<span slot="header">raw data</span>
 						<Textarea value={JSON.stringify(item.properties, null, 2)} rows="6" readonly/>
 					</AccordionItem>
 				</Accordion>
