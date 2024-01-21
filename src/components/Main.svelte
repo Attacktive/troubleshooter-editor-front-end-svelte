@@ -8,7 +8,6 @@
 	import Items from "../components/tabs/Items.svelte";
 	import nyancat from "$lib/assets/nyancat.gif";
 	import Rosters from "../components/tabs/Rosters.svelte";
-	import Quests from "../components/tabs/Quests.svelte";
 
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
@@ -148,9 +147,6 @@
 		</TabItem>
 		<TabItem title="Rosters">
 			<Rosters/>
-		</TabItem>
-		<TabItem title="Quests">
-			<Quests/>
 		</TabItem>
 	</Tabs>
 </div>

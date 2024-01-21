@@ -5,8 +5,7 @@ import { createInitialValue } from "../types/company";
 const initialValue = {
 	company: createInitialValue(),
 	items: [],
-	rosters: [],
-	quests: []
+	rosters: []
 };
 
 const createStore = () => {
