@@ -7,7 +7,7 @@
 </script>
 
 <div class="my-1">
-	<datalist id="option-keys">
+	<datalist id="option-keys-datalist">
 		{#each optionKeyOptions as optionkeyOption, index (`optionkeyOption-${index}`)}
 			<option value={optionkeyOption}/>
 		{/each}
@@ -53,7 +53,7 @@
 				</div>
 				<div class="my-1">
 					<Label for={`option-key-${item.id}`}>Option Key</Label>
-					<Input id={`option-key-${item.id}`} list="option-key" bind:value={item.properties["Option/OptionKey"]}/>
+					<Input id={`option-key-${item.id}`} list="option-keys-datalist" bind:value={item.properties["Option/OptionKey"]}/>
 				</div>
 
 				{#each [1, 2, 3, 4, 5] as ordinal (`item-${item.id}-property-${ordinal}`)}
