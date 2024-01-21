@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Input, Label, NumberInput, Select } from "flowbite-svelte";
+	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 	import { store } from "../../store/store";
 </script>
 
@@ -26,3 +26,10 @@
 		<option value="Merciless">Cruel</option>
 	</Select>
 </div>
+
+<Accordion class="my-2">
+	<AccordionItem>
+		<span slot="header">raw data</span>
+		<Textarea value={JSON.stringify($store.company.properties, null, 2)} rows="10" readonly/>
+	</AccordionItem>
+</Accordion>
