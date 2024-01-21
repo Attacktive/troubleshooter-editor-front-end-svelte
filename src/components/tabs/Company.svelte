@@ -1,6 +1,33 @@
 <script lang="ts">
 	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 	import { store } from "../../store/store";
+
+	type SelectEventWithTarget = Event & { currentTarget: HTMLSelectElement };
+	type TrueOrFalse = "true" | "false";
+
+	interface KeyValuePair {
+		name: string;
+		value: TrueOrFalse;
+	}
+
+	let masterySets: KeyValuePair[];
+	$: masterySets = Object.entries($store.company.properties)
+		.map(([key, value]): KeyValuePair | undefined => {
+			const matched = key.match(/^MasterySetIndex\/(.+)/);
+			if (!matched) {
+				return undefined;
+			}
+
+			return {
+				name: matched[1],
+				value: value as TrueOrFalse
+			};
+		})
+		.filter(keyValuePair => keyValuePair) as KeyValuePair[];
+
+	const onMasterySetChange = (event: SelectEventWithTarget, masterySetName: string) => {
+		$store.company.properties[`MasterySetIndex/${masterySetName}`] = event.currentTarget.value;
+	};
 </script>
 
 <div class="my-1">
@@ -25,6 +52,18 @@
 		<option value="Hard">Hard</option>
 		<option value="Merciless">Cruel</option>
 	</Select>
+</div>
+<div class="my-1 mt-1">
+	Mastery sets
+	{#each masterySets as masterySet (masterySet)}
+		<div class="my-1">
+			<Label>{masterySet.name}</Label>
+			<Select id={`masterySet-${masterySet.name}`} bind:value={masterySet.value} on:input={event => onMasterySetChange(event, masterySet.name)}>
+				<option value="true">true</option>
+				<option value="false">false</option>
+			</Select>
+		</div>
+	{/each}
 </div>
 
 <Accordion class="my-2">
