@@ -8,3 +8,7 @@
 It's the Svelte front-end of a save file editor of the game Troubleshooter: Abandoned Children.
 
 [The Back-end](https://github.com/Attacktive/troubleshooter-editor-back-end/blob/main/README.md)
+
+Archives:
+- [The React version](https://github.com/Attacktive/troubleshooter-editor-front-end)
+- [The Vue.js version](https://github.com/Attacktive/troubleshooter-editor-front-end-vue)
