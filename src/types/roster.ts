@@ -1,4 +1,4 @@
-import type { Properties } from "./property";
+import type { Properties } from "$types/property";
 
 export interface RosterInfo {
 	id: number,

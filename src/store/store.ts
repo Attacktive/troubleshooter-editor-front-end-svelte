@@ -1,6 +1,6 @@
-import type { SaveData } from "../types/save-data";
+import type { SaveData } from "$types/save-data";
 import { writable } from "svelte/store";
-import { createInitialValue } from "../types/company";
+import { createInitialValue } from "$types/company";
 
 const initialValue = {
 	company: createInitialValue(),

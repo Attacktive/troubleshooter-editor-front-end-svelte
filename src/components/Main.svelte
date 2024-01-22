@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { SaveData } from "../types/save-data";
+	import type { SaveData } from "$types/save-data";
 	import type { AxiosRequestConfig } from "axios";
 	import axios from "axios";
 	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
-	import { store } from "../store/store";
-	import Company from "../components/tabs/Company.svelte";
-	import Items from "../components/tabs/Items.svelte";
+	import { store } from "$store/store";
+	import Company from "$components/tabs/Company.svelte";
+	import Items from "$components/tabs/Items.svelte";
+	import Rosters from "$components/tabs/Rosters.svelte";
 	import nyancat from "$lib/assets/nyancat.gif";
-	import Rosters from "../components/tabs/Rosters.svelte";
 
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };

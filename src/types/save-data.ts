@@ -1,6 +1,6 @@
-import type { CompanyInfo } from "./company";
-import type { ItemCollection } from "./item";
-import type { RosterCollection } from "./roster";
+import type { CompanyInfo } from "$types/company";
+import type { ItemCollection } from "$types/item";
+import type { RosterCollection } from "$types/roster";
 
 export interface SaveData {
 	company: CompanyInfo;
