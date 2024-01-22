@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
-	import { store } from "../../store/store";
+	import { store } from "$store/store";
 
 	type SelectEventWithTarget = Event & { currentTarget: HTMLSelectElement };
 	type TrueOrFalse = "true" | "false";

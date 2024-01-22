@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Accordion, AccordionItem, Input, Label, NumberInput, Textarea } from "flowbite-svelte";
-	import { store } from "../../store/store";
+	import { store } from "$store/store";
 </script>
 
 <Accordion>
