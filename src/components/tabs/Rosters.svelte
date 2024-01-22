@@ -24,8 +24,8 @@
 				<NumberInput id={`exp-${roster.id}`} bind:value={roster.exp}/>
 			</div>
 
-			<span slot="header">raw data</span>
-			<Accordion class="mt-4">
+			<Label class="mt-4">raw data</Label>
+			<Accordion>
 				<AccordionItem>
 					<Textarea value={JSON.stringify(roster.properties, null, 2)} rows="6" readonly/>
 				</AccordionItem>

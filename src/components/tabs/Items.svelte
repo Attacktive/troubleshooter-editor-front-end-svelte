@@ -64,8 +64,8 @@
 					</div>
 				{/each}
 
-				<Label>raw data</Label>
-				<Accordion class="mt-4">
+				<Label class="mt-4">raw data</Label>
+				<Accordion>
 					<AccordionItem>
 						<Textarea value={JSON.stringify(item.properties, null, 2)} rows="6" readonly/>
 					</AccordionItem>
