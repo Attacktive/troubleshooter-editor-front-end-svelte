@@ -70,9 +70,9 @@
 	{/if}
 </div>
 
-<Accordion class="my-2">
+<Label class="mt-4">raw data</Label>
+<Accordion>
 	<AccordionItem>
-		<span slot="header">raw data</span>
 		<Textarea value={JSON.stringify($store.company.properties, null, 2)} rows="10" readonly/>
 	</AccordionItem>
 </Accordion>
