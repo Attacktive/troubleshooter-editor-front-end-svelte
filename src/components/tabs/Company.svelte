@@ -25,14 +25,14 @@
 		})
 		.filter(keyValuePair => keyValuePair) as KeyValuePair[];
 
-	const onMasterySetChange = (event: SelectEventWithTarget, masterySetName: string) => {
-		$store.company.properties[`MasterySetIndex/${masterySetName}`] = event.currentTarget.value;
+	const onMasterySetChange = (event: Event, masterySetName: string) => {
+		$store.company.properties[`MasterySetIndex/${masterySetName}`] = (event as SelectEventWithTarget).currentTarget.value;
 	};
 </script>
 
 <div class="my-1">
 	<Label for="id">ID</Label>
-	<NumberInput id="id" bind:value={$store.company.id} readonly/>
+	<NumberInput id="id" value={$store.company.id} readonly/>
 </div>
 <div class="my-1">
 	<Label for="name">Name</Label>
@@ -54,16 +54,20 @@
 	</Select>
 </div>
 <div class="my-1 mt-1">
-	Mastery sets
-	{#each masterySets as masterySet (masterySet)}
-		<div class="my-1">
-			<Label>{masterySet.name}</Label>
-			<Select id={`masterySet-${masterySet.name}`} bind:value={masterySet.value} on:input={event => onMasterySetChange(event, masterySet.name)}>
-				<option value="true">true</option>
-				<option value="false">false</option>
-			</Select>
-		</div>
-	{/each}
+	{#if masterySets.length > 0}
+		<Label>Mastery sets</Label>
+		<Accordion>
+			<AccordionItem>
+				{#each masterySets as masterySet (masterySet)}
+					<Label for={`masterySet-${masterySet.name}`}>{masterySet.name}</Label>
+					<Select id={`masterySet-${masterySet.name}`} bind:value={masterySet.value} on:input={event => onMasterySetChange(event, masterySet.name)}>
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</Select>
+				{/each}
+			</AccordionItem>
+		</Accordion>
+	{/if}
 </div>
 
 <Accordion class="my-2">
