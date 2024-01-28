@@ -15,29 +15,3 @@ export function isItemStatus(status: string): status is ItemStatus {
 }
 
 export type ItemCollection = ItemInfo[];
-
-export function truncateItems(items: ItemCollection): ItemCollection {
-	const filterImportantOptions = (key: string) => (key === "Binded" || /^Option\/.+$/i.test(key));
-
-	return items.filter(item => item.status === "equipped")
-	.map(item => {
-		const properties = Object.keys(item.properties)
-		.filter(filterImportantOptions)
-		.reduce(
-			(object: Properties, key: string) => {
-				object[key] = item.properties[key];
-
-				return object;
-			},
-			{}
-		);
-
-		return {
-			id: item.id,
-			type: item.type,
-			count: item.count,
-			status: item.status,
-			properties
-		};
-	});
-}
