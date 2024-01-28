@@ -4,6 +4,7 @@ import type { RosterCollection } from "$types/roster";
 
 export interface SaveData {
 	company: CompanyInfo;
-	items: ItemCollection;
-	rosters: RosterCollection
+	gears: ItemCollection;
+	consumables: ItemCollection;
+	rosters: RosterCollection;
 }

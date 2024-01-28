@@ -2,14 +2,15 @@ import type { SaveData } from "$types/save-data";
 import { writable } from "svelte/store";
 import { createInitialValue } from "$types/company";
 
-const initialValue = {
+const initialValue: SaveData = {
 	company: createInitialValue(),
-	items: [],
+	gears: [],
+	consumables: [],
 	rosters: []
 };
 
 const createStore = () => {
-	const store = writable<SaveData>(initialValue);
+	const store = writable(initialValue);
 
 	const { set, subscribe } = store;
 

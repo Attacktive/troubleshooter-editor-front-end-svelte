@@ -5,7 +5,8 @@
 	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
 	import Company from "$components/tabs/Company.svelte";
-	import Items from "$components/tabs/Items.svelte";
+	import Gears from "$components/tabs/Gears.svelte";
+	import Consumables from "$components/tabs/Consumables.svelte";
 	import Rosters from "$components/tabs/Rosters.svelte";
 	import nyancat from "$lib/assets/nyancat.gif";
 
@@ -142,8 +143,11 @@
 		<TabItem title="Company" open>
 			<Company/>
 		</TabItem>
-		<TabItem title="Items">
-			<Items/>
+		<TabItem title="Gears">
+			<Gears/>
+		</TabItem>
+		<TabItem title="Consumables">
+			<Consumables/>
 		</TabItem>
 		<TabItem title="Rosters">
 			<Rosters/>
