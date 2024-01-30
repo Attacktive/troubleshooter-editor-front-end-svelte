@@ -62,7 +62,7 @@
 		fileIsUploaded = false;
 	};
 
-	const download = async (subUrl: string) => {
+	const downloadEdited = async (subUrl: string) => {
 		toShowSpinner = true;
 
 		try {
@@ -81,9 +81,9 @@
 		}
 	}
 
-	const save = () => download("save");
+	const save = () => downloadEdited("save");
 
-	const quickCheats = () => download("quick-cheats");
+	const quickCheats = () => downloadEdited("quick-cheats");
 
 	const generateFormData = (toSubmitEdits: boolean = false) => {
 		if (!file) {
