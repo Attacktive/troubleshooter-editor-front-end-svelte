@@ -30,7 +30,7 @@
 		} else {
 			upload();
 		}
-	}
+	};
 
 	const upload = () => {
 		toShowSpinner = true;
@@ -54,7 +54,7 @@
 				fileIsUploaded = false;
 			})
 			.finally(() => toShowSpinner = false);
-	}
+	};
 
 	const resetFile = () => {
 		debuggingOutput = "";
@@ -79,7 +79,7 @@
 		} finally {
 			toShowSpinner = false;
 		}
-	}
+	};
 
 	const save = () => downloadEdited("save");
 
@@ -94,7 +94,7 @@
 		formData.append("file", file);
 
 		if (toSubmitEdits) {
-			const stringified = store.stringify()
+			const stringified = store.stringify();
 			console.debug("to be uploaded", stringified);
 
 			const blob = new Blob(
@@ -122,7 +122,16 @@
 		files = undefined;
 		store.reset();
 	};
+
+	let toShowTopButton: boolean;
+	const onScroll = () => {
+		toShowTopButton = document?.documentElement.scrollTop > 50;
+	};
+
+	const scrollToTop = () => document?.documentElement.scrollIntoView();
 </script>
+
+<svelte:window on:scroll={onScroll}/>
 
 {#if toShowSpinner}
 	<div class="overlay">
@@ -157,6 +166,11 @@
 <div class="mt-4">
 	<Textarea value={debuggingOutput} rows="8" readonly/>
 </div>
+{#if toShowTopButton}
+	<div class="fixed">
+		<Button on:click={scrollToTop}>△</Button>
+	</div>
+{/if}
 
 <style>
 	.overlay {
@@ -164,5 +178,11 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgb(0 0 0 / 22.22%);
+	}
+
+	.fixed {
+		position: fixed;
+		left: 50%;
+		bottom: 10px;
 	}
 </style>
