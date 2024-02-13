@@ -43,7 +43,7 @@ const createStore = () => {
 		const itemMergedSaveData = generateItemMergedSaveData(state);
 
 		return JSON.stringify(itemMergedSaveData);
-	}
+	};
 
 	return {
 		set,
