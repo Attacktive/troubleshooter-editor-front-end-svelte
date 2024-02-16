@@ -25,6 +25,29 @@
 		})
 		.filter(keyValuePair => keyValuePair) as KeyValuePair[];
 
+	interface Troublemaker {
+		exp: number;
+		isNew: boolean;
+		/* TODO: what the heck is this? */
+		isKill: boolean;
+		reward: boolean;
+	}
+
+	let troublemakers: Troublemaker[];
+	$: troublemakers = Object.entries($store.company.properties)
+		.map(([key, value]): KeyValuePair | undefined => {
+			const matched = key.match(/^Troublemaker\/(.+)/);
+			if (!matched) {
+				return undefined;
+			}
+
+			return {
+				name: matched[1],
+				value: value as TrueOrFalse
+			};
+		})
+
+
 	const onMasterySetChange = (event: Event, masterySetName: string) => {
 		$store.company.properties[`MasterySetIndex/${masterySetName}`] = (event as SelectEventWithTarget).currentTarget.value;
 	};
