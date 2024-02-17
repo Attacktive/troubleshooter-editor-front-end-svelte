@@ -1,14 +1,9 @@
 <script lang="ts">
+	import type { NameValuePair, InputEventWithTarget, TrueOrFalse } from "$types/common";
+	import type { Troublemaker } from "$types/company";
 	import { Accordion, AccordionItem, Card, Checkbox, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
-
-	type InputEventWithTarget = Event & { currentTarget: HTMLInputElement };
-	type TrueOrFalse = "true" | "false";
-
-	interface KeyValuePair {
-		name: string;
-		value: TrueOrFalse;
-	}
+	import { isTrueOrFalse } from "$types/common";
 
 	type TroublemakerProperties = "Exp" | "IsKill" | "IsNew" | "Reward";
 
@@ -19,16 +14,7 @@
 		Reward?: TrueOrFalse;
 	}
 
-	interface Troublemaker {
-		name: string;
-		exp?: number;
-		isNew?: TrueOrFalse;
-		/* TODO: what the heck is this? */
-		isKill?: TrueOrFalse;
-		rewarded?: TrueOrFalse;
-	}
-
-	let masterySets: KeyValuePair[];
+	let masterySets: NameValuePair<TrueOrFalse>[];
 	let rawTroublemakers: Record<string, RawTroublemaker>;
 	let troublemakers: Troublemaker[];
 
@@ -40,10 +26,12 @@
 		for (const [key, value] of properties) {
 			const masterySet = key.match(/^MasterySetIndex\/(.+)/);
 			if (masterySet) {
-				masterySets.push({
-					name: masterySet[1],
-					value: value as TrueOrFalse
-				});
+				if (isTrueOrFalse(value)) {
+					masterySets.push({
+						name: masterySet[1],
+						value: value
+					});
+				}
 
 				continue;
 			}
@@ -58,6 +46,7 @@
 					rawTroublemakers[identifier] = troublemakerRecord;
 				}
 
+				// TODO: Doesn't make sense when it's Exp.
 				troublemakerRecord[propertyName as TroublemakerProperties] = value as TrueOrFalse;
 			}
 		}
@@ -65,10 +54,13 @@
 		masterySets = [...masterySets];
 		troublemakers = Object.entries(rawTroublemakers)
 			.map(([identifier, troublemakerTemp]) => {
-				const exp = troublemakerTemp.Exp? parseInt(troublemakerTemp.Exp): 0;
-				const isNew = String(troublemakerTemp.IsNew === "true") as TrueOrFalse;
-				const isKill = String(troublemakerTemp.IsKill === "true") as TrueOrFalse;
-				const reward = String(troublemakerTemp.Reward === "true") as TrueOrFalse;
+				const { Exp, IsNew, IsKill, Reward } = troublemakerTemp;
+
+				const exp = Exp? parseInt(Exp): 0;
+
+				const isNew = String(IsNew === "true") as TrueOrFalse;
+				const isKill = String(IsKill === "true") as TrueOrFalse;
+				const reward = String(Reward === "true") as TrueOrFalse;
 
 				return { name: identifier, exp, isNew, isKill, rewarded: reward };
 			});
