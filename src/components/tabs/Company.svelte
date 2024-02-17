@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
+	import { Accordion, AccordionItem, Card, Checkbox, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
 
-	type SelectEventWithTarget = Event & { currentTarget: HTMLSelectElement };
+	type InputEventWithTarget = Event & { currentTarget: HTMLInputElement };
 	type TrueOrFalse = "true" | "false";
 
 	interface KeyValuePair {
@@ -10,46 +10,88 @@
 		value: TrueOrFalse;
 	}
 
-	let masterySets: KeyValuePair[];
-	$: masterySets = Object.entries($store.company.properties)
-		.map(([key, value]): KeyValuePair | undefined => {
-			const matched = key.match(/^MasterySetIndex\/(.+)/);
-			if (!matched) {
-				return undefined;
-			}
+	type TroublemakerProperties = "Exp" | "IsKill" | "IsNew" | "Reward";
 
-			return {
-				name: matched[1],
-				value: value as TrueOrFalse
-			};
-		})
-		.filter(keyValuePair => keyValuePair) as KeyValuePair[];
-
-	interface Troublemaker {
-		exp: number;
-		isNew: boolean;
-		/* TODO: what the heck is this? */
-		isKill: boolean;
-		reward: boolean;
+	interface RawTroublemaker {
+		Exp?: string;
+		IsNew?: TrueOrFalse;
+		IsKill?: TrueOrFalse;
+		Reward?: TrueOrFalse;
 	}
 
+	interface Troublemaker {
+		name: string;
+		exp?: number;
+		isNew?: TrueOrFalse;
+		/* TODO: what the heck is this? */
+		isKill?: TrueOrFalse;
+		rewarded?: TrueOrFalse;
+	}
+
+	let masterySets: KeyValuePair[];
+	let rawTroublemakers: Record<string, RawTroublemaker>;
 	let troublemakers: Troublemaker[];
-	$: troublemakers = Object.entries($store.company.properties)
-		.map(([key, value]): KeyValuePair | undefined => {
-			const matched = key.match(/^Troublemaker\/(.+)/);
-			if (!matched) {
-				return undefined;
+
+	$: {
+		const properties = Object.entries($store.company.properties);
+
+		masterySets = [];
+		rawTroublemakers = {};
+		for (const [key, value] of properties) {
+			const masterySet = key.match(/^MasterySetIndex\/(.+)/);
+			if (masterySet) {
+				masterySets.push({
+					name: masterySet[1],
+					value: value as TrueOrFalse
+				});
+
+				continue;
 			}
 
-			return {
-				name: matched[1],
-				value: value as TrueOrFalse
-			};
-		})
+			const troublemaker = key.match(/^Troublemaker\/Mon_(.+)\/(.+)/);
+			if (troublemaker) {
+				const [_, identifier, propertyName] = troublemaker;
 
+				let troublemakerRecord = rawTroublemakers[identifier];
+				if (!troublemakerRecord) {
+					troublemakerRecord = {};
+					rawTroublemakers[identifier] = troublemakerRecord;
+				}
 
-	const onMasterySetChange = (event: Event, masterySetName: string) => {
-		$store.company.properties[`MasterySetIndex/${masterySetName}`] = (event as SelectEventWithTarget).currentTarget.value;
+				troublemakerRecord[propertyName as TroublemakerProperties] = value as TrueOrFalse;
+			}
+		}
+
+		masterySets = [...masterySets];
+		troublemakers = Object.entries(rawTroublemakers)
+			.map(([identifier, troublemakerTemp]) => {
+				const exp = troublemakerTemp.Exp? parseInt(troublemakerTemp.Exp): 0;
+				const isNew = String(troublemakerTemp.IsNew === "true") as TrueOrFalse;
+				const isKill = String(troublemakerTemp.IsKill === "true") as TrueOrFalse;
+				const reward = String(troublemakerTemp.Reward === "true") as TrueOrFalse;
+
+				return { name: identifier, exp, isNew, isKill, rewarded: reward };
+			});
+	}
+
+	const onMasterySetChange = (masterySetName: string, event: Event) => {
+		$store.company.properties[`MasterySetIndex/${masterySetName}`] = String((event as InputEventWithTarget).currentTarget.checked);
+	};
+
+	const onTroublemakerChange = (identifier: string, rawPropertyName: string, event: Event) => {
+		$store.company.properties[`Troublemaker/Mon_${identifier}/${rawPropertyName}`] = String((event as InputEventWithTarget).currentTarget.checked);
+	};
+
+	const onTroublemakerIsNewChange = (identifier: string, event: Event) => {
+		onTroublemakerChange(identifier, "IsNew", event);
+	};
+
+	const onTroublemakerIsKillChange = (identifier: string, event: Event) => {
+		onTroublemakerChange(identifier, "IsKill", event);
+	};
+
+	const onTroublemakerIsRewardedChange = (identifier: string, event: Event) => {
+		onTroublemakerChange(identifier, "Reward", event);
 	};
 </script>
 
@@ -76,22 +118,40 @@
 		<option value="Merciless">Cruel</option>
 	</Select>
 </div>
-<div class="my-1 mt-1">
-	{#if masterySets.length > 0}
+{#if masterySets.length > 0}
+	<div class="my-1 mt-1">
 		<Label>Mastery sets</Label>
 		<Accordion>
 			<AccordionItem>
 				{#each masterySets as masterySet (masterySet)}
-					<Label for={`masterySet-${masterySet.name}`}>{masterySet.name}</Label>
-					<Select id={`masterySet-${masterySet.name}`} bind:value={masterySet.value} on:input={event => onMasterySetChange(event, masterySet.name)}>
-						<option value="true">true</option>
-						<option value="false">false</option>
-					</Select>
+					<Checkbox value="true" checked={masterySet.value === "true"} on:change={event => onMasterySetChange(masterySet.name, event)}>{masterySet.name}</Checkbox>
 				{/each}
 			</AccordionItem>
 		</Accordion>
-	{/if}
-</div>
+	</div>
+{/if}
+{#if troublemakers.length > 0}
+	<div class="my-1 mt-1">
+		<Label>Troublemakers</Label>
+		<Accordion>
+			<AccordionItem>
+				{#each troublemakers as troublemaker (troublemaker.name)}
+					<Card class="my-1">
+						<form>
+							<h3>{troublemaker.name}</h3>
+							<Label for={`${troublemaker.name}-exp`}>Exp</Label>
+							<NumberInput id={`${troublemaker.name}-exp`} step="1" bind:value={troublemaker.exp}/>
+
+							<Checkbox value="true" checked={troublemaker.isNew === "true"} on:change={event => onTroublemakerIsNewChange(troublemaker.name, event)}>New?</Checkbox>
+							<Checkbox value="true" checked={troublemaker.isKill === "true"} on:change={event => onTroublemakerIsKillChange(troublemaker.name, event)}>Kill?</Checkbox>
+							<Checkbox value="true" checked={troublemaker.rewarded === "true"} on:change={event => onTroublemakerIsRewardedChange(troublemaker.name, event)}>Rewarded?</Checkbox>
+						</form>
+					</Card>
+				{/each}
+			</AccordionItem>
+		</Accordion>
+	</div>
+{/if}
 
 <Label class="mt-4">raw data</Label>
 <Accordion>
