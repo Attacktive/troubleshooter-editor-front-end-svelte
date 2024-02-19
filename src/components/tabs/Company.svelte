@@ -5,12 +5,11 @@
 	import { store } from "$store/store";
 	import { isTrueOrFalse } from "$types/common";
 
-	type TroublemakerProperties = "Exp" | "IsKill" | "IsNew" | "Reward";
+	type TroublemakerProperties = "Exp" | "IsNew" | "Reward";
 
 	interface RawTroublemaker {
 		Exp?: string;
 		IsNew?: TrueOrFalse;
-		IsKill?: TrueOrFalse;
 		Reward?: TrueOrFalse;
 	}
 
@@ -54,15 +53,14 @@
 		masterySets = [...masterySets];
 		troublemakers = Object.entries(rawTroublemakers)
 			.map(([identifier, troublemakerTemp]) => {
-				const { Exp, IsNew, IsKill, Reward } = troublemakerTemp;
+				const { Exp, IsNew, Reward } = troublemakerTemp;
 
 				const exp = Exp? parseInt(Exp): 0;
 
 				const isNew = String(IsNew === "true") as TrueOrFalse;
-				const isKill = String(IsKill === "true") as TrueOrFalse;
 				const reward = String(Reward === "true") as TrueOrFalse;
 
-				return { name: identifier, exp, isNew, isKill, rewarded: reward };
+				return { name: identifier, exp, isNew, rewarded: reward };
 			});
 	}
 
@@ -76,10 +74,6 @@
 
 	const onTroublemakerIsNewChange = (identifier: string, event: Event) => {
 		onTroublemakerChange(identifier, "IsNew", event);
-	};
-
-	const onTroublemakerIsKillChange = (identifier: string, event: Event) => {
-		onTroublemakerChange(identifier, "IsKill", event);
 	};
 
 	const onTroublemakerIsRewardedChange = (identifier: string, event: Event) => {
@@ -135,7 +129,6 @@
 							<NumberInput id={`${troublemaker.name}-exp`} step="1" bind:value={troublemaker.exp}/>
 
 							<Checkbox value="true" checked={troublemaker.isNew === "true"} on:change={event => onTroublemakerIsNewChange(troublemaker.name, event)}>New?</Checkbox>
-							<Checkbox value="true" checked={troublemaker.isKill === "true"} on:change={event => onTroublemakerIsKillChange(troublemaker.name, event)}>Kill?</Checkbox>
 							<Checkbox value="true" checked={troublemaker.rewarded === "true"} on:change={event => onTroublemakerIsRewardedChange(troublemaker.name, event)}>Rewarded?</Checkbox>
 						</form>
 					</Card>

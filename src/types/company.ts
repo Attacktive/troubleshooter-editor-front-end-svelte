@@ -27,7 +27,5 @@ export interface Troublemaker {
 	name: string;
 	exp?: number;
 	isNew?: TrueOrFalse;
-	/* TODO: what the heck is this? */
-	isKill?: TrueOrFalse;
 	rewarded?: TrueOrFalse;
 }
