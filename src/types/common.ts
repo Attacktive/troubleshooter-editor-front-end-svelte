@@ -4,8 +4,16 @@ export interface NameValuePair<T> {
 }
 
 export type TrueOrFalse = "true" | "false";
-export function isTrueOrFalse(input: string): input is TrueOrFalse {
+function isTrueOrFalse(input: string): input is TrueOrFalse {
 	return input === "true" || input === "false";
+}
+
+export function toTrueOrFalse(input: string) {
+	if (isTrueOrFalse(input)) {
+		return input;
+	}
+
+	throw new Error(`${input} is neither "true" nor "false"!`);
 }
 
 export type InputEventWithTarget = Event & { currentTarget: HTMLInputElement };
