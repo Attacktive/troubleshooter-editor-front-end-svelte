@@ -3,7 +3,7 @@
 	import type { Troublemaker } from "$types/company";
 	import { Accordion, AccordionItem, Card, Checkbox, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
-	import { isTrueOrFalse } from "$types/common";
+	import { toTrueOrFalse } from "$types/common";
 
 	type TroublemakerProperties = "Exp" | "IsNew" | "Reward";
 
@@ -25,12 +25,10 @@
 		for (const [key, value] of properties) {
 			const masterySet = key.match(/^MasterySetIndex\/(.+)/);
 			if (masterySet) {
-				if (isTrueOrFalse(value)) {
-					masterySets.push({
-						name: masterySet[1],
-						value: value
-					});
-				}
+				masterySets.push({
+					name: masterySet[1],
+					value: toTrueOrFalse(value)
+				});
 
 				continue;
 			}
@@ -57,8 +55,8 @@
 
 				const exp = Exp? parseInt(Exp): 0;
 
-				const isNew = String(IsNew === "true") as TrueOrFalse;
-				const reward = String(Reward === "true") as TrueOrFalse;
+				const isNew = toTrueOrFalse(IsNew === "true");
+				const reward = toTrueOrFalse(Reward === "true");
 
 				return { name: identifier, exp, isNew, rewarded: reward };
 			});
