@@ -8,7 +8,11 @@ function isTrueOrFalse(input: string): input is TrueOrFalse {
 	return input === "true" || input === "false";
 }
 
-export function toTrueOrFalse(input: string) {
+export function toTrueOrFalse(input?: string) {
+	if (!input) {
+		return "false";
+	}
+
 	if (isTrueOrFalse(input)) {
 		return input;
 	}

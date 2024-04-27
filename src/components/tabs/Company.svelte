@@ -55,8 +55,8 @@
 
 				const exp = Exp? parseInt(Exp): 0;
 
-				const isNew = toTrueOrFalse(IsNew === "true");
-				const reward = toTrueOrFalse(Reward === "true");
+				const isNew = toTrueOrFalse(IsNew);
+				const reward = toTrueOrFalse(Reward);
 
 				return { name: identifier, exp, isNew, rewarded: reward };
 			});
