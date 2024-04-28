@@ -70,6 +70,10 @@
 		$store.company.properties[`Troublemaker/Mon_${identifier}/${rawPropertyName}`] = String((event as InputEventWithTarget).currentTarget.checked);
 	};
 
+	const onTroublemakerExpChange = (identifier: string, event: Event) => {
+		$store.company.properties[`Troublemaker/Mon_${identifier}/Exp`] = String((event as InputEventWithTarget).currentTarget.value);
+	};
+
 	const onTroublemakerIsNewChange = (identifier: string, event: Event) => {
 		onTroublemakerChange(identifier, "IsNew", event);
 	};
@@ -124,7 +128,7 @@
 						<form>
 							<h3>{troublemaker.name}</h3>
 							<Label for={`${troublemaker.name}-exp`}>Exp</Label>
-							<NumberInput id={`${troublemaker.name}-exp`} step="1" bind:value={troublemaker.exp}/>
+							<NumberInput id={`${troublemaker.name}-exp`} step="1" value={troublemaker.exp} on:change={event => onTroublemakerExpChange(troublemaker.name, event)}/>
 
 							<Checkbox value="true" checked={troublemaker.isNew === "true"} on:change={event => onTroublemakerIsNewChange(troublemaker.name, event)}>New?</Checkbox>
 							<Checkbox value="true" checked={troublemaker.rewarded === "true"} on:change={event => onTroublemakerIsRewardedChange(troublemaker.name, event)}>Rewarded?</Checkbox>
