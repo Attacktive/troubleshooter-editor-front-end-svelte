@@ -18,6 +18,7 @@
 	let fileIsUploaded = false;
 	let debuggingOutput = "";
 	let files: FileList | undefined;
+	let firstTabIsOpen = true;
 
 	$: file = files?.[0];
 	$: fileIsSelected = file !== undefined;
@@ -119,6 +120,7 @@
 	};
 
 	const resetComponents = () => {
+		firstTabIsOpen = true;
 		files = undefined;
 		store.reset();
 	};
@@ -149,7 +151,7 @@
 </div>
 <div class="mt-4">
 	<Tabs>
-		<TabItem title="Company" open>
+		<TabItem title="Company" bind:open={firstTabIsOpen}>
 			<Company/>
 		</TabItem>
 		<TabItem title="Gears">
