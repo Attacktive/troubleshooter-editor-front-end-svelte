@@ -1,4 +1,6 @@
-const config = {
+import type { Config } from "tailwindcss";
+
+const config: Config = {
 	content: [
 		"./src/**/*.{html,svelte,ts,js}",
 		"./node_modules/flowbite-svelte/**/*.{html,svelte,ts,js}"
@@ -7,7 +9,6 @@ const config = {
 	theme: {
 		extend: {
 			colors: {
-				// flowbite-svelte
 				primary: {
 					50: "#FFF5F2",
 					100: "#FFF1EE",
@@ -26,4 +27,4 @@ const config = {
 	plugins: [require("flowbite/plugin")]
 };
 
-module.exports = config;
+export default config;
