@@ -12,12 +12,12 @@
 
 <datalist id="option-keys-datalist">
 	{#each optionKeyOptions as optionkeyOption, index (`optionkeyOption-${index}`)}
-		<option value={optionkeyOption}/>
+		<option value={optionkeyOption}>{optionkeyOption}</option>
 	{/each}
 </datalist>
 <datalist id="options-datalist">
 	{#each propertyOptions as propertyOption, index (`propertyOption-${index}`)}
-		<option value={propertyOption}/>
+		<option value={propertyOption}>{propertyOption}</option>
 	{/each}
 </datalist>
 
