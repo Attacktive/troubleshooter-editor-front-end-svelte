@@ -1,15 +1,27 @@
 <script lang="ts">
 	import type { ItemCollection } from "$types/item";
+	import type { Snippet } from "svelte";
 	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
 
-	export let items: ItemCollection;
+	interface IndexedChild {
+		index: number;
+	}
+
+	interface Props {
+		items: ItemCollection;
+		children?: Snippet<[IndexedChild]>;
+	}
+
+	let { items, children }: Props = $props();
 </script>
 
 <div class="my-1">
 	<Accordion>
 		{#each items as item, index (`item-${item.id}`)}
 			<AccordionItem>
-				<span slot="header">#{item.id} {item.type}</span>
+				{#snippet header()}
+					<span >#{item.id} {item.type}</span>
+				{/snippet}
 				<div class="my-1">
 					<Label for={`type-${item.id}`}>Type</Label>
 					<Input id={`type-${item.id}`} bind:value={item.type}/>
@@ -29,12 +41,14 @@
 					</Select>
 				</div>
 
-				<slot index={index}/>
+				{#if children}
+					{@render children({ index })}
+				{/if}
 
 				<Label class="mt-4">raw data</Label>
 				<Accordion>
 					<AccordionItem>
-						<Textarea value={JSON.stringify(item.properties, null, 2)} rows="6" readonly/>
+						<Textarea value={JSON.stringify(item.properties, null, 2)} rows={6} readonly/>
 					</AccordionItem>
 				</Accordion>
 			</AccordionItem>

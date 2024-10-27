@@ -13,54 +13,49 @@
 		Reward?: TrueOrFalse;
 	}
 
-	let masterySets: NameValuePair<TrueOrFalse>[];
-	let rawTroublemakers: Record<string, RawTroublemaker>;
-	let troublemakers: Troublemaker[];
+	const properties = $derived.by(() => Object.entries($store.company.properties));
+	const masterySets: NameValuePair<TrueOrFalse>[] = $derived.by(() => properties
+		.filter(([key]) => /^MasterySetIndex\/.+/.test(key))
+		.map(([key, value]) => {
+			const masterySet = key.match(/^MasterySetIndex\/(.+)/)!;
 
-	$: {
-		const properties = Object.entries($store.company.properties);
+			return {
+				name: masterySet[1],
+				value: toTrueOrFalse(value)
+			};
+		}));
 
-		masterySets = [];
-		rawTroublemakers = {};
+	const rawTroublemakers = $derived.by(() => {
+		const troublemakerRecords: Record<string, RawTroublemaker> = {};
+
 		for (const [key, value] of properties) {
-			const masterySet = key.match(/^MasterySetIndex\/(.+)/);
-			if (masterySet) {
-				masterySets.push({
-					name: masterySet[1],
-					value: toTrueOrFalse(value)
-				});
-
-				continue;
-			}
-
 			const troublemaker = key.match(/^Troublemaker\/Mon_(.+)\/(.+)/);
 			if (troublemaker) {
 				const [_, identifier, propertyName] = troublemaker;
 
-				let troublemakerRecord = rawTroublemakers[identifier];
-				if (!troublemakerRecord) {
-					troublemakerRecord = {};
-					rawTroublemakers[identifier] = troublemakerRecord;
+				if (!troublemakerRecords[identifier]) {
+					troublemakerRecords[identifier] = {};
 				}
 
-				// TODO: Doesn't make sense when it's Exp.
-				troublemakerRecord[propertyName as TroublemakerProperties] = value as TrueOrFalse;
+				troublemakerRecords[identifier][propertyName as TroublemakerProperties] = value as TrueOrFalse;
 			}
 		}
 
-		masterySets = [...masterySets];
-		troublemakers = Object.entries(rawTroublemakers)
-			.map(([identifier, troublemakerTemp]) => {
-				const { Exp, IsNew, Reward } = troublemakerTemp;
+		return troublemakerRecords;
+	});
 
-				const exp = Exp? parseInt(Exp): 0;
+	const troublemakers: Troublemaker[] = $derived.by(() => Object.entries(rawTroublemakers)
+		.map(([identifier, troublemakerTemp]) => {
+			const { Exp, IsNew, Reward } = troublemakerTemp;
 
-				const isNew = toTrueOrFalse(IsNew);
-				const reward = toTrueOrFalse(Reward);
+			const exp = Exp? parseInt(Exp): 0;
 
-				return { name: identifier, exp, isNew, rewarded: reward };
-			});
-	}
+			const isNew = toTrueOrFalse(IsNew);
+			const reward = toTrueOrFalse(Reward);
+
+			return { name: identifier, exp, isNew, rewarded: reward };
+		})
+	);
 
 	const onMasterySetChange = (masterySetName: string, event: Event) => {
 		$store.company.properties[`MasterySetIndex/${masterySetName}`] = String((event as InputEventWithTarget).currentTarget.checked);
@@ -143,6 +138,6 @@
 <Label class="mt-4">raw data</Label>
 <Accordion>
 	<AccordionItem>
-		<Textarea value={JSON.stringify($store.company.properties, null, 2)} rows="10" readonly/>
+		<Textarea value={JSON.stringify($store.company.properties, null, 2)} rows={10} readonly/>
 	</AccordionItem>
 </Accordion>
