@@ -6,7 +6,9 @@
 <Accordion>
 	{#each $store.rosters as roster (`roster-${roster.id}`)}
 		<AccordionItem>
-			<span slot="header">#{roster.id} {roster.name}</span>
+			{#snippet header()}
+						<span >#{roster.id} {roster.name}</span>
+					{/snippet}
 			<div class="my-1">
 				<Label for={`name-${roster.id}`}>Name</Label>
 				<Input id={`name-${roster.id}`} bind:value={roster.name}/>
@@ -27,7 +29,7 @@
 			<Label class="mt-4">raw data</Label>
 			<Accordion>
 				<AccordionItem>
-					<Textarea value={JSON.stringify(roster.properties, null, 2)} rows="6" readonly/>
+					<Textarea value={JSON.stringify(roster.properties, null, 2)} rows={6} readonly/>
 				</AccordionItem>
 			</Accordion>
 		</AccordionItem>

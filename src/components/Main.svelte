@@ -13,16 +13,16 @@
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
 
-	let fileUploadKey = {};
-	let toShowSpinner = false;
-	let fileIsUploaded = false;
-	let debuggingOutput = "";
-	let files: FileList | undefined;
-	let firstTabIsOpen = true;
+	let fileUploadKey = $state({});
+	let toShowSpinner = $state(false);
+	let fileIsUploaded = $state(false);
+	let debuggingOutput = $state("");
+	let files: FileList | undefined = $state();
+	let firstTabIsOpen = $state(true);
 
-	$: file = files?.[0];
-	$: fileIsSelected = file !== undefined;
-	$: uploadResetButtonLabel = fileIsUploaded? "Reset" : "Upload";
+	let file = $derived(files?.[0]);
+	let fileIsSelected = $derived(file !== undefined);
+	let uploadResetButtonLabel = $derived(fileIsUploaded? "Reset" : "Upload");
 
 	const uploadOrReset = () => {
 		if (fileIsUploaded) {
@@ -125,7 +125,7 @@
 		store.reset();
 	};
 
-	let toShowTopButton: boolean;
+	let toShowTopButton: boolean = $state(false);
 	const onScroll = () => {
 		toShowTopButton = document?.documentElement.scrollTop > 50;
 	};
@@ -133,7 +133,7 @@
 	const scrollToTop = () => document?.documentElement.scrollIntoView();
 </script>
 
-<svelte:window on:scroll={onScroll}/>
+<svelte:window onscroll={onScroll}/>
 
 {#if toShowSpinner}
 	<div class="overlay">
@@ -166,7 +166,7 @@
 	</Tabs>
 </div>
 <div class="mt-4">
-	<Textarea value={debuggingOutput} rows="8" readonly/>
+	<Textarea value={debuggingOutput} rows={8} readonly/>
 </div>
 {#if toShowTopButton}
 	<div class="fixed">
