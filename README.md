@@ -8,8 +8,30 @@
 
 It's the Svelte front-end of a save file editor of the game Troubleshooter: Abandoned Children.
 
-[The Back-end](https://github.com/Attacktive/troubleshooter-editor-back-end)
+## ▶ How to Use
 
-Archives:
+⚠️Note that you need [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) running **either way**.
+
+### At [the GitHub Pages](https://attacktive.github.io/troubleshooter-editor-front-end-svelte/) (preferred)
+
+nothing else 🤷
+
+### Running Local (maybe for developers)
+
+#### prerequisites
+
+- [Git](https://git-scm.com/downloads)
+- [Node.js v22](https://nodejs.org/en/download/package-manager)
+
+```shell
+
+git clone https://github.com/Attacktive/troubleshooter-editor-front-end-svelte.git
+cd troubleshooter-editor-front-end-svelte
+npm install
+npm run dev
+```
+
+## Archives
+
 - [The React version](https://github.com/Attacktive/troubleshooter-editor-front-end)
 - [The Vue.js version](https://github.com/Attacktive/troubleshooter-editor-front-end-vue)
