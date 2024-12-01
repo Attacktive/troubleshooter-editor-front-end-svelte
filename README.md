@@ -10,18 +10,30 @@ It's the Svelte front-end of a save file editor of the game Troubleshooter: Aban
 
 ## ▶ How to Use
 
-⚠️Note that you need [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) running **either way**.
-
 ### At [the GitHub Pages](https://attacktive.github.io/troubleshooter-editor-front-end-svelte/) (preferred)
 
-nothing else 🤷
+[the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) is being served on the cloud but via HTTP.
+You will have to disable a security feature. ☠
 
-### Running Local (maybe for developers)
+If you see something like the following:
+![error](https://github.com/user-attachments/assets/15c3665c-e9ad-4473-9e99-605f656c156b)
+
+then do the following:
+
+- Google Chrome:
+	![chrome #1](https://github.com/user-attachments/assets/be1e388a-e19b-4494-a2e6-75fe8d6ae0bb)
+	![chrome #2](https://github.com/user-attachments/assets/f2bd132e-fd82-42ae-9576-76f714c01852)
+- FireFox
+	![firefox #1](https://github.com/user-attachments/assets/d27f5d61-6dc3-45e2-85c4-3f740303c265)
+	![firefox #2](https://github.com/user-attachments/assets/8597d6b3-f268-4902-b880-4f3c99c3513a)
+
+### Running Local
 
 #### prerequisites
 
 - [Git](https://git-scm.com/downloads)
 - [Node.js v22](https://nodejs.org/en/download/package-manager)
+- [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) running
 
 ```shell
 
