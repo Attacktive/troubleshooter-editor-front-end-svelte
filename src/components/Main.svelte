@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SaveData } from "$types/save-data";
 	import type { AxiosRequestConfig } from "axios";
+	import { onMount } from "svelte";
 	import axios from "axios";
 	import { Button, Fileupload, Img, TabItem, Tabs, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
@@ -125,15 +126,33 @@
 		store.reset();
 	};
 
+	let toShowErrorBackEndIsNotRunning = $state(false);
+	onMount(() => {
+		axios
+			.get(`${apiRoot}`)
+			.catch((error) => {
+				console.error(error);
+
+				toShowErrorBackEndIsNotRunning = true;
+			})
+	});
+
 	let toShowTopButton: boolean = $state(false);
-	const onScroll = () => {
+	const onWindowScroll = () => {
 		toShowTopButton = document?.documentElement.scrollTop > 50;
 	};
 
 	const scrollToTop = () => document?.documentElement.scrollIntoView();
 </script>
 
-<svelte:window onscroll={onScroll}/>
+<svelte:window onscroll={onWindowScroll}/>
+
+{#if toShowErrorBackEndIsNotRunning}
+	<div id="warning-container" class="overlay">
+		<p>The <a href="https://github.com/Attacktive/troubleshooter-editor-back-end">back-end app</a> might not be running locally!</p>
+		<p id="warning-container-emoji">🚧</p>
+	</div>
+{/if}
 
 {#if toShowSpinner}
 	<div class="overlay">
@@ -175,6 +194,21 @@
 {/if}
 
 <style>
+	#warning-container {
+		container-type: inline-size;
+	}
+
+	#warning-container > p {
+		color: red;
+		font-size: 66px;
+	}
+
+	#warning-container > #warning-container-emoji {
+		display: block;
+		text-align: center;
+		font-size: 28cqh;
+	}
+
 	.overlay {
 		position: fixed;
 		width: 100%;
