@@ -32,12 +32,15 @@ const generateItemMergedSaveData = (source: SaveData): ItemMergedSaveData => {
 const createStore = () => {
 	const store = writable(initialValue);
 
-	const { set, subscribe } = store;
+	const { set, update, subscribe } = store;
 
 	const reset = () => set(initialValue);
 
 	let state: SaveData;
-	subscribe((value: SaveData) => state = value);
+	subscribe((value: SaveData) => {
+		console.debug("store updated", value);
+		state = value;
+	});
 
 	const stringify = () => {
 		const itemMergedSaveData = generateItemMergedSaveData(state);
@@ -47,6 +50,7 @@ const createStore = () => {
 
 	return {
 		set,
+		update,
 		reset,
 		subscribe,
 		stringify

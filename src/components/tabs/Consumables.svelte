@@ -5,4 +5,5 @@
 	const consumables = $store.consumables;
 </script>
 
-<Items items={consumables}/>
+<!--<Items items={consumables}/>-->
+Under construction 🏗
