@@ -14,10 +14,10 @@ It's the Svelte front-end of a save file editor of the game Troubleshooter: Aban
 
 <details>
 
-<summary>Not required anymore</summary>
+<summary>⚠️ Not required anymore</summary>
 
 [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) is being served on the cloud but via HTTP.
-You will have to disable a security feature. ☠
+You will have to disable a security feature. ☠️
 
 If you see something like the following:
 ![error](https://github.com/user-attachments/assets/15c3665c-e9ad-4473-9e99-605f656c156b)
