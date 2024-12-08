@@ -7,8 +7,8 @@
 	{#each $store.rosters as roster (`roster-${roster.id}`)}
 		<AccordionItem>
 			{#snippet header()}
-						<span >#{roster.id} {roster.name}</span>
-					{/snippet}
+				<span>#{roster.id} {roster.name}</span>
+			{/snippet}
 			<div class="my-1">
 				<Label for={`name-${roster.id}`}>Name</Label>
 				<Input id={`name-${roster.id}`} bind:value={roster.name}/>

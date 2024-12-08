@@ -20,7 +20,7 @@
 		{#each items as item, index (`item-${item.id}`)}
 			<AccordionItem>
 				{#snippet header()}
-					<span >#{item.id} {item.type}</span>
+					<span>#{item.id} {item.type}</span>
 				{/snippet}
 				<div class="my-1">
 					<Label for={`type-${item.id}`}>Type</Label>
