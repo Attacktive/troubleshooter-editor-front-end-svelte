@@ -12,6 +12,10 @@ It's the Svelte front-end of a save file editor of the game Troubleshooter: Aban
 
 ### At [the GitHub Pages](https://attacktive.github.io/troubleshooter-editor-front-end-svelte/) (preferred)
 
+<details>
+
+<summary>Not required anymore</summary>
+
 [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) is being served on the cloud but via HTTP.
 You will have to disable a security feature. ☠
 
@@ -26,8 +30,9 @@ then do the following:
 - FireFox
 	![firefox #1](https://github.com/user-attachments/assets/d27f5d61-6dc3-45e2-85c4-3f740303c265)
 	![firefox #2](https://github.com/user-attachments/assets/8597d6b3-f268-4902-b880-4f3c99c3513a)
+</details>
 
-### Running Local
+### Running Locally
 
 #### prerequisites
 
