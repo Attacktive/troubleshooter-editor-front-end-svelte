@@ -12,6 +12,8 @@ It's the Svelte front-end of a save file editor of the game Troubleshooter: Aban
 
 ### At [the GitHub Pages](https://attacktive.github.io/troubleshooter-editor-front-end-svelte/) (preferred)
 
+It should just work. 😀
+
 <details>
 
 <summary>⚠️ Not required anymore</summary>
