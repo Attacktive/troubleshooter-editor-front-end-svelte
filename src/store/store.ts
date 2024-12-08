@@ -37,10 +37,7 @@ const createStore = () => {
 	const reset = () => set(initialValue);
 
 	let state: SaveData;
-	subscribe((value: SaveData) => {
-		console.debug("store updated", value);
-		state = value;
-	});
+	subscribe((value: SaveData) => state = value);
 
 	const stringify = () => {
 		const itemMergedSaveData = generateItemMergedSaveData(state);
