@@ -19,9 +19,9 @@
 	<Accordion>
 		{#each items as item, index (`item-${item.id}`)}
 			<AccordionItem>
-				{#snippet header()}
+				<svelte:fragment slot="header">
 					<span>#{item.id} {item.type}</span>
-				{/snippet}
+				</svelte:fragment>
 				<div class="my-1">
 					<Label for={`type-${item.id}`}>Type</Label>
 					<Input id={`type-${item.id}`} bind:value={item.type}/>
