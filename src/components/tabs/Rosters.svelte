@@ -6,9 +6,9 @@
 <Accordion>
 	{#each $store.rosters as roster (`roster-${roster.id}`)}
 		<AccordionItem>
-			{#snippet header()}
+			<svelte:fragment slot="header">
 				<span>#{roster.id} {roster.name}</span>
-			{/snippet}
+			</svelte:fragment>
 			<div class="my-1">
 				<Label for={`name-${roster.id}`}>Name</Label>
 				<Input id={`name-${roster.id}`} bind:value={roster.name}/>

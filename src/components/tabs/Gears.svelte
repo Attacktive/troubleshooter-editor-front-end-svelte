@@ -21,9 +21,9 @@
 	<Accordion>
 		{#each $store.gears as gear (`gear-${gear.id}`)}
 			<AccordionItem>
-				{#snippet header()}
+				<svelte:fragment slot="header">
 					<span>#{gear.id} {gear.type}</span>
-				{/snippet}
+				</svelte:fragment>
 				<div class="my-1">
 					<Label for={`type-${gear.id}`}>Type</Label>
 					<Input id={`type-${gear.id}`} bind:value={gear.type}/>
