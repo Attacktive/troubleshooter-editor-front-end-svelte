@@ -30,7 +30,7 @@
 		"flowbite": "^2.5.2",
 		"flowbite-svelte": "^0.47.4",
 		"jsdom": "^26.0.0",
-		"postcss": "^8.5.0",
+		"postcss": "^8.5.1",
 		"postcss-load-config": "^6.0.1",
 		"svelte": "^5.17.4",
 		"svelte-check": "^4.1.4",
