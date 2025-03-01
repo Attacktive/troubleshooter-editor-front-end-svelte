@@ -162,7 +162,7 @@
 
 <div class="grid grid-cols-12 mt-2">
 	{#key fileUploadKey}
-		<Fileupload bind:files={files} accept={".sav,.bak"} class="col-span-3"/>
+		<Fileupload bind:files={files} accept=".sav,.bak" class="col-span-3"/>
 	{/key}
 	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} on:click={uploadOrReset}>{uploadResetButtonLabel}</Button>
 	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={save}>Save</Button>
