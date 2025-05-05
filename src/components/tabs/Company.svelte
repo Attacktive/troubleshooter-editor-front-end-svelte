@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { NameValuePair, InputEventWithTarget, TrueOrFalse } from "$types/common";
 	import type { Troublemaker } from "$types/company";
-	import { Accordion, AccordionItem, Card, Checkbox, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
+	import { Accordion, AccordionItem, Card, Checkbox, Input, Label, Select, Textarea } from "flowbite-svelte";
 	import { store } from "$store/store";
 	import { toTrueOrFalse } from "$types/common";
 
@@ -80,7 +80,7 @@
 
 <div class="my-1">
 	<Label for="id">ID</Label>
-	<NumberInput id="id" value={$store.company.id} readonly/>
+	<Input type="number" id="id" value={$store.company.id} readonly/>
 </div>
 <div class="my-1">
 	<Label for="name">Name</Label>
@@ -88,7 +88,7 @@
 </div>
 <div class="my-1">
 	<Label for="vill">Vill</Label>
-	<NumberInput id="vill" bind:value={$store.company.vill}/>
+	<Input type="number" id="vill" bind:value={$store.company.vill}/>
 </div>
 <div class="my-1">
 	<Label for="difficulty">Difficulty</Label>
@@ -107,7 +107,7 @@
 		<Accordion>
 			<AccordionItem>
 				{#each masterySets as masterySet (masterySet)}
-					<Checkbox value="true" checked={masterySet.value === "true"} on:change={event => onMasterySetChange(masterySet.name, event)}>{masterySet.name}</Checkbox>
+					<Checkbox value="true" checked={masterySet.value === "true"} onchange={event => onMasterySetChange(masterySet.name, event)}>{masterySet.name}</Checkbox>
 				{/each}
 			</AccordionItem>
 		</Accordion>
@@ -123,10 +123,10 @@
 						<form>
 							<h3>{troublemaker.name}</h3>
 							<Label for={`${troublemaker.name}-exp`}>Exp</Label>
-							<NumberInput id={`${troublemaker.name}-exp`} step="1" value={troublemaker.exp} on:change={event => onTroublemakerExpChange(troublemaker.name, event)}/>
+							<Input type="number" id={`${troublemaker.name}-exp`} step="1" value={troublemaker.exp} onchange={event => onTroublemakerExpChange(troublemaker.name, event)}/>
 
-							<Checkbox value="true" checked={troublemaker.isNew === "true"} on:change={event => onTroublemakerIsNewChange(troublemaker.name, event)}>New?</Checkbox>
-							<Checkbox value="true" checked={troublemaker.rewarded === "true"} on:change={event => onTroublemakerIsRewardedChange(troublemaker.name, event)}>Rewarded?</Checkbox>
+							<Checkbox value="true" checked={troublemaker.isNew === "true"} onchange={event => onTroublemakerIsNewChange(troublemaker.name, event)}>New?</Checkbox>
+							<Checkbox value="true" checked={troublemaker.rewarded === "true"} onchange={event => onTroublemakerIsRewardedChange(troublemaker.name, event)}>Rewarded?</Checkbox>
 						</form>
 					</Card>
 				{/each}

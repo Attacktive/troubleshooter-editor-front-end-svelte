@@ -164,13 +164,13 @@
 	{#key fileUploadKey}
 		<Fileupload bind:files={files} accept=".sav,.bak" class="col-span-3"/>
 	{/key}
-	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} on:click={uploadOrReset}>{uploadResetButtonLabel}</Button>
-	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={save}>Save</Button>
-	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} on:click={quickCheats}>Quick Cheats!</Button>
+	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} onclick={uploadOrReset}>{uploadResetButtonLabel}</Button>
+	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} onclick={save}>Save</Button>
+	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} onclick={quickCheats}>Quick Cheats!</Button>
 </div>
 <div class="mt-4">
 	<Tabs>
-		<TabItem title="Company" bind:open={firstTabIsOpen}>
+		<TabItem title="Company" open={firstTabIsOpen}>
 			<Company/>
 		</TabItem>
 		<TabItem title="Gears">
@@ -189,7 +189,7 @@
 </div>
 {#if toShowTopButton}
 	<div class="fixed">
-		<Button on:click={scrollToTop}>△</Button>
+		<Button onclick={scrollToTop}>△</Button>
 	</div>
 {/if}
 

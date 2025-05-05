@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ItemCollection } from "$types/item";
 	import type { Snippet } from "svelte";
-	import { Accordion, AccordionItem, Input, Label, NumberInput, Select, Textarea } from "flowbite-svelte";
+	import { Accordion, AccordionItem, Input, Label, Select, Textarea } from "flowbite-svelte";
 
 	interface IndexedChild {
 		index: number;
@@ -19,16 +19,16 @@
 	<Accordion>
 		{#each items as item, index (`item-${item.id}`)}
 			<AccordionItem>
-				<svelte:fragment slot="header">
+				{#snippet header()}
 					<span>#{item.id} {item.type}</span>
-				</svelte:fragment>
+				{/snippet}
 				<div class="my-1">
 					<Label for={`type-${item.id}`}>Type</Label>
 					<Input id={`type-${item.id}`} bind:value={item.type}/>
 				</div>
 				<div class="my-1">
 					<Label for={`count-${item.id}`}>Count</Label>
-					<NumberInput id={`count-${item.id}`} bind:value={item.count}/>
+					<Input type="number" id={`count-${item.id}`} bind:value={item.count}/>
 				</div>
 				<div class="my-1">
 					<Label for={`status-${item.id}`}>Status</Label>
