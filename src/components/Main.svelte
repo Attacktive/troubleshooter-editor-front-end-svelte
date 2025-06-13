@@ -160,13 +160,13 @@
 	</div>
 {/if}
 
-<div class="grid grid-cols-12 mt-2">
+<div class="flex mt-2">
 	{#key fileUploadKey}
-		<Fileupload bind:files={files} accept=".sav,.bak" class="col-span-3"/>
+		<Fileupload bind:files={files} accept=".sav,.bak"/>
 	{/key}
-	<Button class="mx-8 col-span-2" disabled={!fileIsSelected} onclick={uploadOrReset}>{uploadResetButtonLabel}</Button>
-	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} onclick={save}>Save</Button>
-	<Button class="mx-1 col-span-2" disabled={!fileIsSelected || !fileIsUploaded} onclick={quickCheats}>Quick Cheats!</Button>
+	<Button class="mx-2 w-80 bg-indigo-500 hover:bg-indigo-600" disabled={!fileIsSelected} onclick={uploadOrReset}>{uploadResetButtonLabel}</Button>
+	<Button class="ms-15 me-1 w-80" disabled={!fileIsSelected || !fileIsUploaded} onclick={save}>Save</Button>
+	<Button class="mx-1 w-80" disabled={!fileIsSelected || !fileIsUploaded} onclick={quickCheats}>Quick Cheats!</Button>
 </div>
 <div class="mt-4">
 	<Tabs>
