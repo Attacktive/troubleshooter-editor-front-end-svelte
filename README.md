@@ -6,7 +6,7 @@
 [![ESLint](https://github.com/Attacktive/troubleshooter-editor-front-end-svelte/actions/workflows/eslint.yaml/badge.svg)](https://github.com/Attacktive/troubleshooter-editor-front-end-svelte/actions/workflows/eslint.yaml)
 [![Deploy to gh-pages](https://github.com/Attacktive/troubleshooter-editor-front-end-svelte/actions/workflows/deploy.yaml/badge.svg)](https://github.com/Attacktive/troubleshooter-editor-front-end-svelte/actions/workflows/deploy.yaml)
 
-It's the Svelte front-end of a save file editor of the game Troubleshooter: Abandoned Children.
+It's the Svelte front-end of a save file editor of the game [Troubleshooter: Abandoned Children](https://store.steampowered.com/app/470310/TROUBLESHOOTER_Abandoned_Children/).
 
 ## ▶ How to Use
 
@@ -40,7 +40,6 @@ then do the following:
 
 - [Git](https://git-scm.com/downloads)
 - [Node.js v22](https://nodejs.org/en/download/package-manager)
-- [the back-end application](https://github.com/Attacktive/troubleshooter-editor-back-end) running
 
 ```shell
 
