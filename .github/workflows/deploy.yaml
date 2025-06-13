@@ -17,7 +17,7 @@ jobs:
         run: 'npm ci'
       - name: 'Build project'
         env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
+          BASE_PATH: "/${{ github.event.repository.name }}"
         run: 'npm run build:production'
       - name: 'Run tests'
         run: 'npm run test'
