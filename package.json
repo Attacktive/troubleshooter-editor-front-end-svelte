@@ -29,7 +29,7 @@
 		"eslint": "^9.31.0",
 		"eslint-plugin-svelte": "^3.10.0",
 		"flowbite": "^3.1.2",
-		"flowbite-svelte": "^1.10.4",
+		"flowbite-svelte": "^1.10.6",
 		"jsdom": "^26.1.0",
 		"svelte": "^5.36.2",
 		"svelte-check": "^4.2.2",
