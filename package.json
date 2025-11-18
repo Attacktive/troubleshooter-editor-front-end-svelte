@@ -30,7 +30,7 @@
 		"eslint-plugin-svelte": "^3.13.0",
 		"flowbite": "^4.0.1",
 		"flowbite-svelte": "^1.28.1",
-		"jsdom": "^27.1.0",
+		"jsdom": "^27.2.0",
 		"svelte": "^5.43.9",
 		"svelte-check": "^4.3.4",
 		"tailwindcss": "^4.1.12",
