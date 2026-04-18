@@ -10,17 +10,17 @@ jobs:
       - name: 'Checkout code'
         uses: 'actions/checkout@v4'
       - name: 'Install Node.js'
-        uses: 'actions/setup-node@v4'
+        uses: 'oven.sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6'
         with:
-          node-version: '22.x'
-      - name: 'Install NPM packages'
-        run: 'npm ci'
+          bun-version: 'latest'
+      - name: 'Install Bun packages'
+        run: 'bun install --frozen-lockfile'
       - name: 'Build project'
         env:
           BASE_PATH: "/${{ github.event.repository.name }}"
-        run: 'npm run build:production'
+        run: 'bun run build:production'
       - name: 'Run tests'
-        run: 'npm run test'
+        run: 'bun run test'
       - name: 'Upload artifacts'
         uses: 'actions/upload-pages-artifact@v3'
         with:
