@@ -45,8 +45,8 @@ then do the following:
 
 git clone https://github.com/Attacktive/troubleshooter-editor-front-end-svelte.git
 cd troubleshooter-editor-front-end-svelte
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 ## Archives
