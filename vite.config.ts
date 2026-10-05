@@ -1,7 +1,21 @@
-import { defineConfig } from "vite";
-import { sveltekit } from "@sveltejs/kit/vite";
-import tailwindcss from "@tailwindcss/vite";
+import adapter from '@sveltejs/adapter-static';
+import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [sveltekit(), tailwindcss()]
+	plugins: [
+		sveltekit({
+			preprocess: vitePreprocess(),
+			adapter: adapter(),
+			alias: {
+				$: 'src',
+				$components: 'src/components',
+				$store: 'src/store',
+				$types: 'src/types'
+			}
+		}),
+		tailwindcss()
+	]
 });
