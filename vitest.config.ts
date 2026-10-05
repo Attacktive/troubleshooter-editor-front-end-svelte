@@ -1,18 +1,17 @@
-import type { CompileOptions } from "svelte/compiler";
-import type { Plugin } from "rollup";
-import { defineConfig } from "vitest/config";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import type { CompileOptions } from 'svelte/compiler';
+import { defineConfig } from 'vitest/config';
 
 const compilerOptions: CompileOptions = {
 	hmr: !process.env.VITEST
 };
 
 export default defineConfig({
-	plugins: [svelte({ compilerOptions }) as Plugin[]],
+	plugins: [svelte({ compilerOptions })],
 	test: {
-		environment: "jsdom"
+		environment: 'jsdom'
 	},
 	resolve: {
-		conditions: ["browser"]
+		conditions: ['browser']
 	}
 });
