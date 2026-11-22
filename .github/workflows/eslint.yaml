@@ -21,3 +21,7 @@ jobs:
         run: 'bun run lint'
       - name: 'Run svelte-check'
         run: 'bun run check'
+      - name: 'Build production app'
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+        run: 'bun run build:production'

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Footer, FooterLink, FooterLinkGroup } from "flowbite-svelte";
-	import github from "$lib/assets/github.svg";
+	import github from "#lib/assets/github.svg";
 </script>
 
 <Footer class="flex flex-row-reverse">

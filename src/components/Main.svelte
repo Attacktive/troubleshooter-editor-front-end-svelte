@@ -9,7 +9,7 @@
 	import Gears from "$components/tabs/Gears.svelte";
 	import Consumables from "$components/tabs/Consumables.svelte";
 	import Rosters from "$components/tabs/Rosters.svelte";
-	import nyancat from "$lib/assets/nyancat.gif";
+	import nyancat from "#lib/assets/nyancat.gif";
 
 	const apiRoot = import.meta.env.VITE_API_ROOT;
 	const axiosRequestConfigForFileDownload: AxiosRequestConfig = { responseType: "blob" };
